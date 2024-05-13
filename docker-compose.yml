@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  api:
+    container_name: univida-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    depends_on:
+      - database
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
+      - TYPEORM_HOST=${TYPEORM_HOST}
+      - TYPEORM_PORT=${TYPEORM_PORT}
+      - TYPEORM_USERNAME=${TYPEORM_USERNAME}
+      - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
+      - TYPEORM_DATABASE=${TYPEORM_DATABASE}
+      - JWT_SECRET=${JWT_SECRET}
+
+  database:
+    container_name: univida_db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+      - POSTGRES_DB=${TYPEORM_DATABASE}
+    volumes:
+      - univida-db-data:/var/lib/postgresql/data
+
+volumes:
+  univida-db-data:
