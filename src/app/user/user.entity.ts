@@ -1,16 +1,10 @@
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { hashSync } from 'bcryptjs';
 
-@Entity({schema: 'public', name: 'users'})
+@Entity({schema: 'public', name: 'user'})
 export class UserEntity{
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column({ name: 'first_name' })
-    firstName: string;
-
-    @Column({ name: 'last_name' })
-    lastName: string;
 
     @Column()
     email: string;
