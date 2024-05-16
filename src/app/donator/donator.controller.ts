@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { DonatorService } from './donator.service';
-import { DonatorEntity } from './donator.entity';
+import { DonatorEntity } from './entities/donator.entity';
+import { DonatorDto } from './dto/donator.dto';
+import { DonatorDetailsDto } from './dto/donator.details.dto';
 
 @Controller('api/v1/donator')
 export class DonatorController {
-  constructor( private readonly donatorService: DonatorService ) {}
+  constructor(private readonly donatorService: DonatorService) { }
 
   @Get()
   async index() {
@@ -18,26 +20,26 @@ export class DonatorController {
 
   @Get('details/:id')
   async donationsDetails(id: number) {
-    return await this.donatorService.donationsDetails(id);
+    return await this.donatorService.findByIdDonatorDetails(id);
   }
 
   @Post('details')
-  async createDonatorDetails() {
-    return await this.donatorService.createDonatorDetails();
+  async createDonatorDetails(@Body() body: DonatorDetailsDto) {
+    return await this.donatorService.createDonatorDetails(body);
   }
 
   @Post()
-  async create(@Body() body: any) {
+  async create(@Body() body: DonatorDto) {
     return await this.donatorService.create(body);
   }
 
   @Delete(':id')
-    async delete(id: number) {
-      return await this.donatorService.delete(id);
-    }
+  async delete(@Param('id') id: number) {
+    return await this.donatorService.delete(id);
+  }
 
   @Put(':id')
-    async update(id: number) {
-      return await this.donatorService.update(id);
-    }
+  async update(@Param('id') id: number, @Body() body: DonatorDto){
+    return await this.donatorService.update(id, body);
   }
+}
