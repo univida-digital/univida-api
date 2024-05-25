@@ -4,6 +4,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UserModule } from './app/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { DonatorModule } from './app/donator/donator.module';
+import { HospitalModule } from './app/hospital/hospital.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { DonatorModule } from './app/donator/donator.module';
     UserModule,
     AuthModule,
     DonatorModule,
+    HospitalModule,
   ],
   controllers: [],
   providers: [],
