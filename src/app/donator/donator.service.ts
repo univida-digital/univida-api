@@ -22,7 +22,11 @@ export class DonatorService {
   }  
   
   async findById(id: number) {
-    return await this.donatorRepository.findOneOrFail({ where: { id } });
+    try {
+      return await this.donatorRepository.findOneOrFail({ where: { id } })
+    } catch (error) {
+      throw new NotFoundException(`Not found user with id ${id}`);
+    };
   }
 
   async findByIdDonatorDetails(id: number) {
@@ -42,7 +46,10 @@ export class DonatorService {
   async delete(id: number) {
     try {
       const donator = await this.donatorRepository.findOneOrFail({ where: { id } });
-      return await this.donatorRepository.softRemove(donator);
+      const donationsDetails = await this.donatorDetailsRepository.findOneOrFail({ where: { id } });
+      await this.donatorDetailsRepository.softRemove(donationsDetails);
+      await this.donatorRepository.softRemove(donator);
+      return { message: `Donator ${id} was deleted` };
     } catch (error) {
       throw new NotFoundException(`Donator with id ${id} not found`);
     }

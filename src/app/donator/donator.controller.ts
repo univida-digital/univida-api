@@ -1,12 +1,13 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { DonatorService } from './donator.service';
-import { DonatorEntity } from './entities/donator.entity';
 import { DonatorDto } from './dto/donator.dto';
 import { DonatorDetailsDto } from './dto/donator.details.dto';
 
 @Controller('api/v1/donator')
 export class DonatorController {
-  constructor(private readonly donatorService: DonatorService) { }
+  constructor(
+    private readonly donatorService: DonatorService
+  ) { }
 
   @Get()
   async index() {
