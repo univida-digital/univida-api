@@ -6,7 +6,7 @@ export class HospitalEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => UserEntity)
+  @OneToOne(() => UserEntity, { eager: true })
   @JoinColumn({ name: "user_id" })
   userId: number;
 
