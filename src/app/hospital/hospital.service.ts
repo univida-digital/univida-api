@@ -12,9 +12,7 @@ export class HospitalService {
   ) { }
 
   async findAll() {
-    return await this.hospitalRepository.find({
-      relations: ['userId']
-    });
+    return await this.hospitalRepository.find();
   }  
   
   async findById(id: number) {

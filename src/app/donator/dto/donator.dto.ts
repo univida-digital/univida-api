@@ -19,10 +19,7 @@ export class DonatorDto {
 
   @IsNotEmpty()
   rg: string;
-
-  @IsNotEmpty()
-  address: string;
-
+  
   @IsNotEmpty()
   contacts: ContactDto[];
 

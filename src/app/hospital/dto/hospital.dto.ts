@@ -1,8 +1,11 @@
-import { IsInt, IsNotEmpty, IsOptional, isInt } from "class-validator";
+import { IsNotEmpty } from "class-validator";
+import { UserEntity } from "src/app/user/user.entity";
+import { AddressDto } from "src/shared/dto/address.dto";
+import { ContactDto } from "src/shared/dto/contact.dto";
 
 export class HospitalDto {
-  @IsInt()
-  userId: number;
+  @IsNotEmpty()
+  user: UserEntity;
    
   @IsNotEmpty()
   name: string;
@@ -14,8 +17,8 @@ export class HospitalDto {
   hospitalType: string;
 
   @IsNotEmpty()
-  contact: string;
+  contacts: ContactDto[];
 
   @IsNotEmpty()
-  address: string;
+  addresses: AddressDto[];
 }
