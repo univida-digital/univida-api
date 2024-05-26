@@ -5,20 +5,12 @@ import { UserModule } from './app/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { DonatorModule } from './app/donator/donator.module';
 import { HospitalModule } from './app/hospital/hospital.module';
+import { dataSourceOptions } from 'db/data-source';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-        type: process.env.TYPEORM_CONNECTION,
-        host: process.env.TYPEORM_HOST,
-        port: process.env.TYPEORM_PORT,
-        username: process.env.TYPEORM_USERNAME,
-        password: process.env.TYPEORM_PASSWORD,
-        database: process.env.TYPEORM_DATABASE,
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
-      } as TypeOrmModuleOptions),
+    TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
     AuthModule,
     DonatorModule,
