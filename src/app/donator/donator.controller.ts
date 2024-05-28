@@ -19,16 +19,6 @@ export class DonatorController {
     return await this.donatorService.findById(id);
   }
 
-  @Get('details/:id')
-  async donationsDetails(id: number) {
-    return await this.donatorService.findByIdDonatorDetails(id);
-  }
-
-  @Post('details')
-  async createDonatorDetails(@Body() body: DonatorDetailsDto) {
-    return await this.donatorService.createDonatorDetails(body);
-  }
-
   @Post()
   async create(@Body() body: DonatorDto) {
     return await this.donatorService.create(body);

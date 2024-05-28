@@ -1,11 +1,12 @@
-import { IsInt, IsNotEmpty, IsOptional, isInt } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
+import { ContactDto } from "src/shared/dto/contact.dto";
+import { UserEntity } from "src/app/user/user.entity";
+import { DonatorDetailsDto } from "./donator.details.dto";
+import { AddressDto } from "src/shared/dto/address.dto";
 
 export class DonatorDto {
   @IsOptional()
   donatorDetailsId: number;
-
-  @IsInt()
-  userId: number;
 
   @IsNotEmpty()
   firstName: string;
@@ -18,10 +19,16 @@ export class DonatorDto {
 
   @IsNotEmpty()
   rg: string;
+  
+  @IsNotEmpty()
+  contacts: ContactDto[];
 
   @IsNotEmpty()
-  contact: string;
+  addresses: AddressDto[];
 
   @IsNotEmpty()
-  address: string;
+  donatorDetails: DonatorDetailsDto;
+
+  @IsNotEmpty()
+  user: UserEntity;
 }

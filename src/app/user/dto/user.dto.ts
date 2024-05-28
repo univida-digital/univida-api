@@ -4,12 +4,6 @@ import { regExHelper } from "src/helpers/regex.helper";
 
 export class UserDto {
   @IsNotEmpty()
-  firstName: string;
-
-  @IsNotEmpty()
-  lastName: string;
-  
-  @IsNotEmpty()
   type: string;
   
   @IsNotEmpty()

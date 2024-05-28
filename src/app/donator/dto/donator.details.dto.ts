@@ -1,8 +1,9 @@
 import { IsNotEmpty, IsOptional } from "class-validator";
+import { DonatorEntity } from "../entities/donator.entity";
 
 export class DonatorDetailsDto {
-  @IsOptional()
-  donatorId: number;
+  @IsNotEmpty()
+  donator: DonatorEntity;
 
   @IsNotEmpty()
   orientation: string;

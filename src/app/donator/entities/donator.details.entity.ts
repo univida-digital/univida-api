@@ -7,8 +7,7 @@ export class DonatorDetailsEntity {
   id: number;
   
   @OneToOne(() => DonatorEntity)
-  @JoinColumn({ name: "donator_id" })
-  donatorId: number;
+  donator: DonatorEntity;
 
   @Column({ name: 'orientation' })
   orientation: string;
