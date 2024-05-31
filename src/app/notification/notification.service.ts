@@ -6,6 +6,7 @@ import { UserService } from '../user/user.service';
 import { EmailValidationEntity } from './entity/email.validation.entity';
 import { EmailValidationDto } from './dto/email.validation.dto';
 import { config as dotenvConfig } from 'dotenv';
+import { ExpiredValidationCodeException, InvalidValidationCodeException } from 'src/exceptions';
 
 dotenvConfig();
 
@@ -35,8 +36,7 @@ export class NotificationService {
 
   async validateEmail(data: EmailValidationDto) {
     try {
-      console.log(data.validationCode)
-
+      
       const emailValidation = await this.emailValidationRepository.findOne({
         where: {
           user: { id: data.user.id },
@@ -45,11 +45,11 @@ export class NotificationService {
       });
 
       if (!emailValidation) {
-        return 'Invalid validation code';
+        throw new InvalidValidationCodeException();
       }
 
       if (emailValidation.expirationDate && emailValidation.expirationDate < new Date()) {
-        return 'Validation code has expired';
+        throw new ExpiredValidationCodeException();
       }
 
       emailValidation.isValidated = true;
@@ -57,8 +57,9 @@ export class NotificationService {
       await this.emailValidationRepository.save(emailValidation);
 
       return { message: 'Email validated successfully' };
+
     } catch (error) {
-      console.log(`Error validate email: ${error}`)
+      throw new Error(`Error validate email: ${error}`)
     }
   }
 
@@ -87,7 +88,7 @@ export class NotificationService {
 
       await this.emailValidationRepository.save(emailValidation);
 
-      return 'email sent successfully';
+      return { message: 'Email sent successfully' };
     } catch (error) {
       throw new NotFoundException(`User not found: ${error}`);
     }
