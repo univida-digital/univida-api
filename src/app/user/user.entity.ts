@@ -1,7 +1,8 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { hashSync } from 'bcryptjs';
 import { DonatorEntity } from "../donator/entities/donator.entity";
 import { HospitalEntity } from "../hospital/hospital.entity";
+import { EmailValidationEntity } from "../notification/entity/email.validation.entity";
 
 @Entity({schema: 'public', name: 'user'})
 export class UserEntity{
@@ -19,6 +20,9 @@ export class UserEntity{
 
     @OneToOne(() => HospitalEntity)
     hospital: HospitalEntity;
+
+    @OneToMany(() => EmailValidationEntity, emailValidation => emailValidation.user)
+    emailValidation: EmailValidationEntity;
 
     @Column()
     password: string;
