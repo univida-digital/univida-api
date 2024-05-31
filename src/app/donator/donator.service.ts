@@ -12,8 +12,6 @@ export class DonatorService {
   constructor(
     @InjectRepository(DonatorEntity)
     private donatorRepository: Repository<DonatorEntity>,
-    @InjectRepository(DonatorDetailsEntity)
-    private donatorDetailsRepository: Repository<DonatorDetailsEntity>,
   ) { } 
 
   async findAll() {
