@@ -21,10 +21,13 @@ export class DonatorDetailsEntity {
   @Column({ name: 'has_allergy' })
   hasAllergy: boolean;
 
-  @Column({ name: 'has_active_sex_live'})
+  @Column({ name: 'allergy_description', nullable: true})
+  allergyDescription: string;
+
+  @Column({ name: 'has_active_sex_live', nullable: true })
   hasActiveSexLive: boolean;
   
-  @Column({ name: 'has_tattoo' })
+  @Column({ name: 'has_tattoo', nullable: true })
   hasTattoo: boolean;
 
   @CreateDateColumn({ name: 'created_at' })

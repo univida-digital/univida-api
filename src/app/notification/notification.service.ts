@@ -37,7 +37,7 @@ export class NotificationService {
   async validateEmail(data: EmailValidationDto) {
     const emailValidation = await this.emailValidationRepository.findOne({
       where: {
-        user: { id: data.user.id },
+        user: { id: data.user_id },
         validationCode: data.validationCode,
       },
     });

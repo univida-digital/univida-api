@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn, } from "typeorm";
 import { UserEntity } from "../../user/user.entity";
 import { ContactEntity } from "src/shared/entities/contact.entity";
 import { DonatorDetailsEntity } from "./donator.details.entity";
@@ -24,7 +24,10 @@ export class DonatorEntity {
 
   @Column({ name: 'last_name' })
   lastName: string;
-
+  
+  @Column({ name: 'birth_date', type: 'date' })
+  birthDate: Date;
+  
   @Column()
   cpf: string;
 
@@ -36,9 +39,6 @@ export class DonatorEntity {
 
   @OneToMany(() => ContactEntity, contact => contact.donator, { eager: true, cascade: true })
   contacts: ContactDto[];
-
-  @Column()
-  address: string;
 
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date;

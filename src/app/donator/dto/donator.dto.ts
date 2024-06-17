@@ -30,5 +30,8 @@ export class DonatorDto {
   donatorDetails: DonatorDetailsDto;
 
   @IsNotEmpty()
+  birthDate: Date;
+
+  @IsNotEmpty()
   user: UserEntity;
 }
