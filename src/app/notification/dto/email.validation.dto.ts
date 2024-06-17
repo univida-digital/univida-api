@@ -3,7 +3,7 @@ import { UserEntity } from "src/app/user/user.entity";
 
 export class EmailValidationDto {
   @IsNotEmpty()
-  user: UserEntity;
+  user_id: number;
     
   @IsNotEmpty()
   validationCode: number;
