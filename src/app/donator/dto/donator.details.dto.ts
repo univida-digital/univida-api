@@ -18,10 +18,22 @@ export class DonatorDetailsDto {
   hasAllergy: boolean;
   
   @IsNotEmpty()
-  hasActiveSexLive: boolean;
+  hasActiveSexLife: boolean;
+
+  @IsOptional()
+  hasCasualActiveSexLife: boolean;
+
+  @IsNotEmpty()
+  usedDrugs: boolean;
+
+  @IsOptional()
+  drugDescription: string;
   
   @IsNotEmpty()
   hasTattoo: boolean;
+
+  @IsOptional()
+  tattooQuantity: number;
 
   @IsOptional()
   allergyDescription: string;
