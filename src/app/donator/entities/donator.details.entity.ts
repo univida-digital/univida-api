@@ -24,11 +24,23 @@ export class DonatorDetailsEntity {
   @Column({ name: 'allergy_description', nullable: true})
   allergyDescription: string;
 
-  @Column({ name: 'has_active_sex_live', nullable: true })
-  hasActiveSexLive: boolean;
+  @Column({ name: 'has_active_sex_life', nullable: true })
+  hasActiveSexLife: boolean;
+
+  @Column({ name: 'has_casual_active_sex_life', nullable: true })
+  hasCasualActiveSexLife: boolean;
   
   @Column({ name: 'has_tattoo', nullable: true })
   hasTattoo: boolean;
+
+  @Column({ name: 'tattoo_quantity', nullable: true })
+  tattooQuantity: number;
+
+  @Column({ name: 'used_drugs', nullable: true })
+  usedDrugs: boolean;
+
+  @Column({ name: 'drug_description', nullable: true })
+  drugDescription: string;
 
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date;
