@@ -1,53 +1,53 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { DonatorEntity } from "./donator.entity";
 
-@Entity({schema: 'public', name: 'donator_details'})
+@Entity({ schema: "public", name: "donator_details" })
 export class DonatorDetailsEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  
+
   @OneToOne(() => DonatorEntity)
   donator: DonatorEntity;
 
-  @Column({ name: 'orientation' })
+  @Column({ name: "orientation" })
   orientation: string;
 
-  @Column({ name: 'gender' })
+  @Column({ name: "gender" })
   gender: string;
 
-  @Column({ name: 'weight_kilo' })
+  @Column({ name: "weight_kilo" })
   weightKilo: number;
 
-  @Column({ name: 'has_allergy' })
+  @Column({ name: "has_allergy" })
   hasAllergy: boolean;
 
-  @Column({ name: 'allergy_description', nullable: true})
+  @Column({ name: "allergy_description", nullable: true })
   allergyDescription: string;
 
-  @Column({ name: 'has_active_sex_life', nullable: true })
+  @Column({ name: "has_active_sex_life", nullable: true })
   hasActiveSexLife: boolean;
 
-  @Column({ name: 'has_casual_active_sex_life', nullable: true })
+  @Column({ name: "has_casual_active_sex_life", nullable: true })
   hasCasualActiveSexLife: boolean;
-  
-  @Column({ name: 'has_tattoo', nullable: true })
+
+  @Column({ name: "has_tattoo", nullable: true })
   hasTattoo: boolean;
 
-  @Column({ name: 'tattoo_quantity', nullable: true })
+  @Column({ name: "tattoo_quantity", nullable: true })
   tattooQuantity: number;
 
-  @Column({ name: 'used_drugs', nullable: true })
+  @Column({ name: "used_drugs", nullable: true })
   usedDrugs: boolean;
 
-  @Column({ name: 'drug_description', nullable: true })
+  @Column({ name: "drug_description", nullable: true })
   drugDescription: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: "created_at" })
   created_at: Date;
-  
-  @UpdateDateColumn({ name: 'updated_at' })
+
+  @UpdateDateColumn({ name: "updated_at" })
   updated_at: Date;
-  
-  @DeleteDateColumn({ name: 'deleted_at' })
+
+  @DeleteDateColumn({ name: "deleted_at" })
   deleted_at: Date;
 }

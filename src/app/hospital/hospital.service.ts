@@ -8,19 +8,19 @@ import { HospitalDto } from "./dto/hospital.dto";
 export class HospitalService {
   constructor(
     @InjectRepository(HospitalEntity)
-    private hospitalRepository: Repository<HospitalEntity>
-  ) { }
+    private hospitalRepository: Repository<HospitalEntity>,
+  ) {}
 
   async findAll() {
     return await this.hospitalRepository.find();
-  }  
-  
+  }
+
   async findById(id: number) {
     try {
-      return await this.hospitalRepository.findOneOrFail({ where: { id } })
+      return await this.hospitalRepository.findOneOrFail({ where: { id } });
     } catch (error) {
       throw new NotFoundException(`Not found user with id ${id}`);
-    };
+    }
   }
 
   async create(data: HospitalDto) {

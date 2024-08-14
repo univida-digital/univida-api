@@ -1,12 +1,12 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import * as nodemailer from 'nodemailer';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserService } from '../user/user.service';
-import { EmailValidationEntity } from './entity/email.validation.entity';
-import { EmailValidationDto } from './dto/email.validation.dto';
-import { config as dotenvConfig } from 'dotenv';
-import { ExpiredValidationCodeException, InvalidValidationCodeException } from 'src/exceptions';
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import * as nodemailer from "nodemailer";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { UserService } from "../user/user.service";
+import { EmailValidationEntity } from "./entity/email.validation.entity";
+import { EmailValidationDto } from "./dto/email.validation.dto";
+import { config as dotenvConfig } from "dotenv";
+import { ExpiredValidationCodeException, InvalidValidationCodeException } from "src/exceptions";
 
 dotenvConfig();
 
@@ -16,8 +16,8 @@ export class NotificationService {
     @InjectRepository(EmailValidationEntity)
     private emailValidationRepository: Repository<EmailValidationEntity>,
 
-    private readonly userService: UserService
-  ) { }
+    private readonly userService: UserService,
+  ) {}
 
   private generateRandomCode() {
     const min = 10000;
@@ -33,7 +33,6 @@ export class NotificationService {
     },
   });
 
-
   async validateEmail(data: EmailValidationDto) {
     const emailValidation = await this.emailValidationRepository.findOne({
       where: {
@@ -43,18 +42,18 @@ export class NotificationService {
     });
 
     if (!emailValidation) {
-      throw new BadRequestException('Invalid validation code');
+      throw new BadRequestException("Invalid validation code");
     }
 
     if (emailValidation.expirationDate && emailValidation.expirationDate < new Date()) {
-      throw new ExpiredValidationCodeException('Validation code has expired');
+      throw new ExpiredValidationCodeException("Validation code has expired");
     }
 
     emailValidation.isValidated = true;
 
     await this.emailValidationRepository.save(emailValidation);
 
-    return { message: 'Email validated successfully' };
+    return { message: "Email validated successfully" };
   }
 
   async sendEmail(email: string) {
@@ -62,18 +61,18 @@ export class NotificationService {
       const user = await this.userService.findByEmail(email);
 
       const randomCode = this.generateRandomCode();
-      
+
       try {
         await this.transporter.sendMail({
           from: process.env.MAIL_USER,
           to: user.email,
-          subject: 'Código de validação',
-          text: 'Seu código de validação é: ' + randomCode,
+          subject: "Código de validação",
+          text: "Seu código de validação é: " + randomCode,
         });
       } catch (error) {
         throw new BadRequestException(`Error sending email: ${error}`);
       }
-      
+
       const emailValidation = new EmailValidationEntity();
 
       const expirationTimeInMinutes = 5;

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module } from "@nestjs/common";
 
 @Module({
   imports: [],
@@ -6,5 +6,4 @@ import { Module } from '@nestjs/common';
   providers: [],
   exports: [],
 })
-
 export class SharedModule {}

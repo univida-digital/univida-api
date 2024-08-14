@@ -6,7 +6,7 @@ import { ContactDto } from "src/shared/dto/contact.dto";
 export class HospitalDto {
   @IsNotEmpty()
   user: UserEntity;
-   
+
   @IsNotEmpty()
   name: string;
 

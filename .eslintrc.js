@@ -1,26 +1,47 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: 'tsconfig.json',
-    tsconfigRootDir: __dirname,
-    sourceType: 'module',
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "standard",
+    "prettier"
   ],
-  root: true,
-  env: {
-    node: true,
-    jest: true,
+  "parserOptions": {
+    "ecmaFeatures": {
+      "tsx": true,
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
   },
-  ignorePatterns: ['.eslintrc.js'],
-  rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    'linebreak-style': ['error', 'CRLF'],
-  },
+  "plugins": ["react", "eslint-plugin-import-helpers", "prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": ["module", "/^@shared/", ["parent", "sibling", "index"]],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ],
+    "no-unused-vars": "off",
+    "import/no-unresolved": "off",
+    "react/prop-types": "off",
+    "camelcase": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "off"
+  }
 };
