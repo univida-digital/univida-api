@@ -5,7 +5,7 @@ import { AddressEntity } from "src/shared/entities/address.entity";
 import { ContactDto } from "src/shared/dto/contact.dto";
 import { ContactEntity } from "src/shared/entities/contact.entity";
 
-@Entity({ schema: 'public', name: 'hospital' })
+@Entity({ schema: "public", name: "hospital" })
 export class HospitalEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,12 +29,12 @@ export class HospitalEntity {
   @Column({ name: "hospital_type" })
   hospitalType: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: "created_at" })
   created_at: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: "updated_at" })
   updated_at: Date;
 
-  @DeleteDateColumn({ name: 'deleted_at' })
+  @DeleteDateColumn({ name: "deleted_at" })
   deleted_at: Date;
 }

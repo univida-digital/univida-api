@@ -5,7 +5,7 @@ import { regExHelper } from "src/helpers/regex.helper";
 export class UserDto {
   @IsNotEmpty()
   type: string;
-  
+
   @IsNotEmpty()
   @IsEmail()
   email: string;

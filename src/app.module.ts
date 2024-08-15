@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { UserModule } from './app/user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { DonatorModule } from './app/donator/donator.module';
-import { HospitalModule } from './app/hospital/hospital.module';
-import { dataSourceOptions } from 'db/data-source';
-import { NotificationModule } from './app/notification/notification.module';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { UserModule } from "./app/user/user.module";
+import { AuthModule } from "./auth/auth.module";
+import { DonatorModule } from "./app/donator/donator.module";
+import { HospitalModule } from "./app/hospital/hospital.module";
+import { dataSourceOptions } from "db/data-source";
+import { NotificationModule } from "./app/notification/notification.module";
 
 @Module({
   imports: [
@@ -18,8 +18,8 @@ import { NotificationModule } from './app/notification/notification.module';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
-      migrations: [__dirname + '/migrations/*{.ts,.js}'],
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      migrations: [__dirname + "/migrations/*{.ts,.js}"],
+      entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
     } as TypeOrmModuleOptions),
     UserModule,

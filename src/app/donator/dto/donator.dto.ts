@@ -13,13 +13,13 @@ export class DonatorDto {
 
   @IsNotEmpty()
   lastName: string;
-  
+
   @IsNotEmpty()
   cpf: string;
 
   @IsNotEmpty()
   rg: string;
-  
+
   @IsNotEmpty()
   contacts: ContactDto[];
 

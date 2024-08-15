@@ -16,7 +16,7 @@ export class DonatorDetailsDto {
 
   @IsNotEmpty()
   hasAllergy: boolean;
-  
+
   @IsNotEmpty()
   hasActiveSexLife: boolean;
 
@@ -28,7 +28,7 @@ export class DonatorDetailsDto {
 
   @IsOptional()
   drugDescription: string;
-  
+
   @IsNotEmpty()
   hasTattoo: boolean;
 

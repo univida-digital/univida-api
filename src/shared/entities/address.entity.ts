@@ -2,7 +2,7 @@ import { DonatorEntity } from "src/app/donator/entities/donator.entity";
 import { HospitalEntity } from "src/app/hospital/hospital.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity({ schema: 'public', name: 'address' })
+@Entity({ schema: "public", name: "address" })
 export class AddressEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,22 +23,22 @@ export class AddressEntity {
   state: string;
 
   @ManyToOne(() => DonatorEntity, donator => donator.addresses)
-  @JoinColumn({ name: 'donator_id' })
+  @JoinColumn({ name: "donator_id" })
   donator: DonatorEntity;
 
   @ManyToOne(() => HospitalEntity, hospital => hospital.addresses)
-  @JoinColumn({ name: 'hospital_id' })
+  @JoinColumn({ name: "hospital_id" })
   hospital: HospitalEntity;
 
   @Column()
   city: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: "created_at" })
   created_at: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: "updated_at" })
   updated_at: Date;
 
-  @DeleteDateColumn({ name: 'deleted_at' })
+  @DeleteDateColumn({ name: "deleted_at" })
   deleted_at: Date;
 }
