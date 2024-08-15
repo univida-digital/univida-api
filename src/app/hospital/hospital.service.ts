@@ -3,6 +3,8 @@ import { HospitalEntity } from "./hospital.entity";
 import { Repository } from "typeorm";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { HospitalDto } from "./dto/hospital.dto";
+import { HospitalQueryDto } from "./dto/hospital.query.dto";
+import { paginate, Pagination } from "nestjs-typeorm-paginate";
 
 @Injectable()
 export class HospitalService {
@@ -11,8 +13,30 @@ export class HospitalService {
     private hospitalRepository: Repository<HospitalEntity>,
   ) {}
 
-  async findAll() {
-    return await this.hospitalRepository.find();
+  async getFilters(query: HospitalQueryDto) {
+    const filters = {};
+
+    if (query.cnpj) filters["cnpj"] = query.cnpj;
+    if (query.hospitalType) filters["hospitalType"] = query.hospitalType;
+    if (query.name) filters["name"] = query.name;
+    if (query.userId) filters["user.id"] = query.userId;
+
+    return filters;
+  }
+
+  async findAll(query: HospitalQueryDto): Promise<Pagination<HospitalEntity>> {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 10;
+
+    const filters = await this.getFilters(query);
+
+    return paginate<HospitalEntity>(
+      this.hospitalRepository,
+      { page, limit },
+      {
+        where: filters,
+      },
+    );
   }
 
   async findById(id: number) {

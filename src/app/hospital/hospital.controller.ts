@@ -1,14 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { HospitalService } from "./hospital.service";
 import { HospitalDto } from "./dto/hospital.dto";
+import { HospitalQueryDto } from "./dto/hospital.query.dto";
 
 @Controller("api/v1/hospital")
 export class HospitalController {
   constructor(private readonly hospitalService: HospitalService) {}
 
   @Get()
-  async index() {
-    return await this.hospitalService.findAll();
+  async index(@Query() query: HospitalQueryDto) {
+    return await this.hospitalService.findAll(query);
   }
 
   @Get(":id")
