@@ -1,29 +1,49 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { UserEntity } from "../user/user.entity";
 import { AddressDto } from "src/shared/dto/address.dto";
 import { AddressEntity } from "src/shared/entities/address.entity";
 import { ContactDto } from "src/shared/dto/contact.dto";
 import { ContactEntity } from "src/shared/entities/contact.entity";
+import { ApiProperty } from "@nestjs/swagger";
 
 @Entity({ schema: "public", name: "hospital" })
 export class HospitalEntity {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
   @OneToOne(() => UserEntity, { eager: true })
   @JoinColumn({ name: "user_id" })
   user: UserEntity;
 
-  @OneToMany(() => AddressEntity, address => address.hospital, { eager: true, cascade: true })
+  @OneToMany(() => AddressEntity, (address) => address.hospital, {
+    eager: true,
+    cascade: true,
+  })
   addresses: AddressDto[];
 
-  @OneToMany(() => ContactEntity, contact => contact.hospital, { eager: true, cascade: true })
+  @OneToMany(() => ContactEntity, (contact) => contact.hospital, {
+    eager: true,
+    cascade: true,
+  })
   contacts: ContactDto[];
 
   @Column()
+  @ApiProperty()
   name: string;
 
   @Column()
+  @ApiProperty()
   cnpj: string;
 
   @Column({ name: "hospital_type" })

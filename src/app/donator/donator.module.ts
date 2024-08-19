@@ -8,7 +8,14 @@ import { AddressEntity } from "src/shared/entities/address.entity";
 import { ContactEntity } from "src/shared/entities/contact.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([DonatorEntity, DonatorDetailsEntity, AddressEntity, ContactEntity])],
+  imports: [
+    TypeOrmModule.forFeature([
+      DonatorEntity,
+      DonatorDetailsEntity,
+      AddressEntity,
+      ContactEntity,
+    ]),
+  ],
   controllers: [DonatorController],
   providers: [DonatorService],
 })
