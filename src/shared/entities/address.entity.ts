@@ -1,6 +1,15 @@
 import { DonatorEntity } from "src/app/donator/entities/donator.entity";
 import { HospitalEntity } from "src/app/hospital/hospital.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity({ schema: "public", name: "address" })
 export class AddressEntity {
@@ -22,11 +31,11 @@ export class AddressEntity {
   @Column()
   state: string;
 
-  @ManyToOne(() => DonatorEntity, donator => donator.addresses)
+  @ManyToOne(() => DonatorEntity, (donator) => donator.addresses)
   @JoinColumn({ name: "donator_id" })
   donator: DonatorEntity;
 
-  @ManyToOne(() => HospitalEntity, hospital => hospital.addresses)
+  @ManyToOne(() => HospitalEntity, (hospital) => hospital.addresses)
   @JoinColumn({ name: "hospital_id" })
   hospital: HospitalEntity;
 

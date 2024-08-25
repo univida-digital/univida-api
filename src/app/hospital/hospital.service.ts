@@ -54,7 +54,9 @@ export class HospitalService {
 
   async delete(id: number) {
     try {
-      const hospital = await this.hospitalRepository.findOneOrFail({ where: { id } });
+      const hospital = await this.hospitalRepository.findOneOrFail({
+        where: { id },
+      });
       await this.hospitalRepository.softRemove(hospital);
       return { message: `Hospital ${id} was deleted` };
     } catch (error) {
@@ -64,7 +66,9 @@ export class HospitalService {
 
   async update(id: number, data: HospitalDto) {
     try {
-      const hospital = await this.hospitalRepository.findOneOrFail({ where: { id } });
+      const hospital = await this.hospitalRepository.findOneOrFail({
+        where: { id },
+      });
       this.hospitalRepository.merge(hospital, data);
       return await this.hospitalRepository.save(hospital);
     } catch (error) {

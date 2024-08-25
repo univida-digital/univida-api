@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import * as nodemailer from "nodemailer";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -6,7 +10,10 @@ import { UserService } from "../user/user.service";
 import { EmailValidationEntity } from "./entity/email.validation.entity";
 import { EmailValidationDto } from "./dto/email.validation.dto";
 import { config as dotenvConfig } from "dotenv";
-import { ExpiredValidationCodeException, InvalidValidationCodeException } from "src/exceptions";
+import {
+  ExpiredValidationCodeException,
+  InvalidValidationCodeException,
+} from "src/exceptions";
 
 dotenvConfig();
 
@@ -45,7 +52,10 @@ export class NotificationService {
       throw new BadRequestException("Invalid validation code");
     }
 
-    if (emailValidation.expirationDate && emailValidation.expirationDate < new Date()) {
+    if (
+      emailValidation.expirationDate &&
+      emailValidation.expirationDate < new Date()
+    ) {
       throw new ExpiredValidationCodeException("Validation code has expired");
     }
 
@@ -77,7 +87,9 @@ export class NotificationService {
 
       const expirationTimeInMinutes = 5;
       const expirationDate = new Date();
-      expirationDate.setMinutes(expirationDate.getMinutes() + expirationTimeInMinutes);
+      expirationDate.setMinutes(
+        expirationDate.getMinutes() + expirationTimeInMinutes,
+      );
 
       emailValidation.user = user;
       emailValidation.validationCode = randomCode;

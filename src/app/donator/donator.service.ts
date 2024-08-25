@@ -60,7 +60,9 @@ export class DonatorService {
 
   async delete(id: number) {
     try {
-      const donator = await this.donatorRepository.findOneOrFail({ where: { id } });
+      const donator = await this.donatorRepository.findOneOrFail({
+        where: { id },
+      });
       await this.donatorRepository.softRemove(donator);
       return { message: `Donator ${id} was deleted` };
     } catch (error) {
@@ -70,7 +72,9 @@ export class DonatorService {
 
   async update(id: number, data: DonatorDto) {
     try {
-      const donator = await this.donatorRepository.findOneOrFail({ where: { id } });
+      const donator = await this.donatorRepository.findOneOrFail({
+        where: { id },
+      });
       this.donatorRepository.merge(donator, data);
       return await this.donatorRepository.save(donator);
     } catch (error) {
