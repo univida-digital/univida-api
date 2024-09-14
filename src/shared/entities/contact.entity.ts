@@ -27,10 +27,10 @@ export class ContactEntity {
   @Column()
   contact: string;
 
-  @Column()
+  @Column({ nullable: true })
   emergency_contact: string;
 
-  @Column()
+  @Column({ nullable: true })
   emergency_contact_name: string;
 
   @CreateDateColumn({ name: "created_at" })
