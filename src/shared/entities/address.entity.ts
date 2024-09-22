@@ -39,6 +39,12 @@ export class AddressEntity {
   @JoinColumn({ name: "hospital_id" })
   hospital: HospitalEntity;
 
+  @Column({ nullable: true })
+  lat: string;
+
+  @Column({ nullable: true })
+  lng: string;
+
   @Column()
   city: string;
 
