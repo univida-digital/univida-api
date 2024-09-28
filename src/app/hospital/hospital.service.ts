@@ -5,6 +5,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { HospitalDto } from "./dto/hospital.dto";
 import { HospitalQueryDto } from "./dto/hospital.query.dto";
 import { paginate, Pagination } from "nestjs-typeorm-paginate";
+import { getDistanceFromLatLonInKm } from "src/helpers/get.distance.helper";
 
 @Injectable()
 export class HospitalService {
@@ -45,6 +46,29 @@ export class HospitalService {
     } catch (error) {
       throw new NotFoundException(`Not found user with id ${id}`);
     }
+  }
+
+  async findNearby(lat: string, lng: string): Promise<(HospitalEntity & { distance: number })[]> {
+    const hospitals = await this.hospitalRepository.find();
+  
+    const nearbyHospitals = hospitals
+      .map((hospital) => {
+        const distance = getDistanceFromLatLonInKm(
+          parseFloat(lat),
+          parseFloat(lng),
+          parseFloat(hospital.addresses[0].lat),
+          parseFloat(hospital.addresses[0].lng)
+        );
+  
+        return {
+          ...hospital,
+          distance,
+        };
+      })
+      .filter((hospital) => hospital.distance)
+      .sort((a, b) => a.distance - b.distance);
+  
+    return nearbyHospitals;
   }
 
   async create(data: HospitalDto) {
