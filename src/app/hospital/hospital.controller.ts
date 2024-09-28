@@ -37,6 +37,14 @@ export class HospitalController {
     return await this.hospitalService.findById(id);
   }
 
+  @Get(":lat/:lng")
+  @ApiOperation({ summary: "Buscar Hospitais mais próximos por latitude e longitude" })
+  @ApiParam({ name: "lat", required: true, description: "Latitude" })
+  @ApiParam({ name: "lng", required: true, description: "Longitude" })
+  async showNearby(@Param("lat") lat: string, @Param("lng") lng: string) {
+    return await this.hospitalService.findNearby(lat, lng);
+  }
+
   @Post()
   @ApiOperation({ summary: "Criar Hospital" })
   async create(@Body() body: HospitalDto) {

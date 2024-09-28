@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class AddressDto {
   @IsNotEmpty()
@@ -18,4 +18,10 @@ export class AddressDto {
 
   @IsNotEmpty()
   city: string;
+
+  @IsOptional()
+  lat: string;
+
+  @IsOptional()
+  lng: string;
 }
