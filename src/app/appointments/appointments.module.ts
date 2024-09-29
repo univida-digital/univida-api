@@ -6,6 +6,7 @@ import { AppointmentsController } from "./appointments.controller";
 import { HospitalEntity } from "../hospital/hospital.entity";
 import { AppointmentsEntity } from "./entities/appointments.entity";
 import { AppointmentsStatusEntity } from "./entities/appointments.status.entity";
+import { CustomLogger } from "src/logger.service";
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { AppointmentsStatusEntity } from "./entities/appointments.status.entity"
     ]),
   ],
   controllers: [AppointmentsController],
-  providers: [AppointmentsService],
+  providers: [AppointmentsService, CustomLogger],
 })
 export class AppointmentsModule {}
