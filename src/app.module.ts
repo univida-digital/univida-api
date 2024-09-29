@@ -7,7 +7,6 @@ import { DonatorModule } from "./app/donator/donator.module";
 import { HospitalModule } from "./app/hospital/hospital.module";
 import { NotificationModule } from "./app/notification/notification.module";
 import { AppointmentsModule } from './app/appointments/appointments.module';
-import { AppointmentsController } from './app/appointments/appointments.controller';
 
 @Module({
   imports: [
@@ -30,7 +29,7 @@ import { AppointmentsController } from './app/appointments/appointments.controll
     NotificationModule,
     AppointmentsModule,
   ],
-  controllers: [AppointmentsController],
+  controllers: [],
   providers: [],
   exports: [],
 })

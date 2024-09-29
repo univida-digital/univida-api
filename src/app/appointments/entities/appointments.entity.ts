@@ -33,7 +33,7 @@ export class AppointmentsEntity {
 
   @Column({ name: "scheduled_date" })
   @ApiProperty()
-  scheduledDate: Date;
+  scheduledDate: string;
 
   @Column({ name: "scheduled_time" })
   @ApiProperty()

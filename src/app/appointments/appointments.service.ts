@@ -37,4 +37,46 @@ export class AppointmentsService {
       },
     );
   }
+
+  async findAvailability(hospitalId: number, scheduledDate: string) {
+    const appointments = await this.donatorRepository.find({
+      where: {
+        hospital: { id: hospitalId },
+        scheduledDate      
+      },
+    });
+
+    const availableTimes = [];
+    const busyTimes = []
+
+    appointments.forEach((appointment) => busyTimes.push(appointment.scheduledTime));
+    
+    // Check if the time has already passed
+    const isPassedTime = (time: string) => {
+      const formattedScheduledDate = new Date(scheduledDate).toISOString().split('T')[0];
+      const formattedCurrentDate = new Date().toISOString().split('T')[0];
+
+      // If the scheduled date is before the current date, return true
+      if (formattedScheduledDate < formattedCurrentDate) return true;
+
+      // If the scheduled date is after the current date, return false
+      if (formattedScheduledDate > formattedCurrentDate) return false;
+
+      const [hour, minutes] = time.split(':').map(Number);
+      const [currentHour, currentMinutes] = new Date().toLocaleTimeString().split(':').map(Number);
+
+      return hour < currentHour || (hour === currentHour && minutes < currentMinutes);
+    }
+
+    for (let hour = 8; hour < 18; hour++) {
+      for (let minutes = 0; minutes < 60; minutes += 30) {
+        const time = `${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        if (!busyTimes.includes(time) && !isPassedTime(time)) {
+          availableTimes.push(time);
+        }
+      }
+    }
+
+    return availableTimes;
+  }
 }
