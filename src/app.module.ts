@@ -6,7 +6,7 @@ import { AuthModule } from "./auth/auth.module";
 import { DonatorModule } from "./app/donator/donator.module";
 import { HospitalModule } from "./app/hospital/hospital.module";
 import { NotificationModule } from "./app/notification/notification.module";
-import { AppointmentsModule } from './app/appointments/appointments.module';
+import { AppointmentsModule } from "./app/appointments/appointments.module";
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { AppointmentsModule } from './app/appointments/appointments.module';
       database: process.env.TYPEORM_DATABASE,
       migrations: [__dirname + "/migrations/*{.ts,.js}"],
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
-      synchronize: true,
+      migrationsRun: true,
     } as TypeOrmModuleOptions),
     UserModule,
     AuthModule,

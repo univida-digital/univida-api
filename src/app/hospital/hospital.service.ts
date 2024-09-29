@@ -48,18 +48,21 @@ export class HospitalService {
     }
   }
 
-  async findNearby(lat: string, lng: string): Promise<(HospitalEntity & { distance: number })[]> {
+  async findNearby(
+    lat: string,
+    lng: string,
+  ): Promise<(HospitalEntity & { distance: number })[]> {
     const hospitals = await this.hospitalRepository.find();
-  
+
     const nearbyHospitals = hospitals
       .map((hospital) => {
         const distance = getDistanceFromLatLonInKm(
           parseFloat(lat),
           parseFloat(lng),
           parseFloat(hospital.addresses[0].lat),
-          parseFloat(hospital.addresses[0].lng)
+          parseFloat(hospital.addresses[0].lng),
         );
-  
+
         return {
           ...hospital,
           distance,
@@ -67,7 +70,7 @@ export class HospitalService {
       })
       .filter((hospital) => hospital.distance <= 100)
       .sort((a, b) => a.distance - b.distance);
-  
+
     return nearbyHospitals;
   }
 
