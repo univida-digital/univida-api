@@ -7,6 +7,7 @@ import { DonatorModule } from "./app/donator/donator.module";
 import { HospitalModule } from "./app/hospital/hospital.module";
 import { NotificationModule } from "./app/notification/notification.module";
 import { AppointmentsModule } from "./app/appointments/appointments.module";
+import { CustomLogger } from "./logger.service";
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { AppointmentsModule } from "./app/appointments/appointments.module";
     AppointmentsModule,
   ],
   controllers: [],
-  providers: [],
-  exports: [],
+  providers: [CustomLogger],
+  exports: [CustomLogger],
 })
 export class AppModule {}

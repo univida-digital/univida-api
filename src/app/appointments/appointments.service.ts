@@ -10,12 +10,14 @@ import { AppointmentsQueryDto } from "./dto/appointments.query.dto";
 import { AppointmentsEntity } from "./entities/appointments.entity";
 import { AppointmentsDto } from "./dto/appointments.dto";
 import { AppointmentsStatus } from "./entities/appointments.status.entity";
+import { CustomLogger } from "src/logger.service";
 
 @Injectable()
 export class AppointmentsService {
   constructor(
     @InjectRepository(AppointmentsEntity)
     private AppoimentsRepository: Repository<AppointmentsEntity>,
+    private readonly logger: CustomLogger,
   ) {}
 
   async getFilters(query: AppointmentsQueryDto) {
@@ -101,6 +103,7 @@ export class AppointmentsService {
   }
 
   async create(data: AppointmentsDto): Promise<AppointmentsEntity> {
+    this.logger.info(`Create appointment > the user ${data.donatorId} is trying to create an appointment`);
     const donatorAppointments = await this.AppoimentsRepository.find({
       where: {
         donator: { id: data.donatorId },
@@ -176,6 +179,8 @@ export class AppointmentsService {
       scheduledDate: data.scheduledDate,
       scheduledTime: data.scheduledTime,
     });
+
+    this.logger.info(`Create appointment > the user ${data.donatorId} has created the appointment ${appointment.id}`);
 
     return await this.AppoimentsRepository.save(appointment);
   }
