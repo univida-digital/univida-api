@@ -12,7 +12,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-@Entity({ schema: "notification", name: "email-validation" })
+@Entity({ schema: "notification", name: "email_validation" })
 export class EmailValidationEntity {
   @PrimaryGeneratedColumn()
   id: number;

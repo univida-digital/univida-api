@@ -1,16 +1,16 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AppointmentsService } from './appointments.service';
-import { AppointmentsEntity } from './entities/appointments.entity';
-import { Pagination } from 'nestjs-typeorm-paginate';
-import { AppointmentsQueryDto } from './dto/appointments.query.dto';
-import { IndexAppointmentsSwagger } from './swagger/index-appointments.swagger';
-import { AppointmentsDto } from './dto/appointments.dto';
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { AppointmentsService } from "./appointments.service";
+import { AppointmentsEntity } from "./entities/appointments.entity";
+import { Pagination } from "nestjs-typeorm-paginate";
+import { AppointmentsQueryDto } from "./dto/appointments.query.dto";
+import { IndexAppointmentsSwagger } from "./swagger/index-appointments.swagger";
+import { AppointmentsDto } from "./dto/appointments.dto";
 
 @Controller("api/v1/appointments")
 @ApiTags("Appointments")
 export class AppointmentsController {
-  constructor(private readonly appointmentsService: AppointmentsService) { }
+  constructor(private readonly appointmentsService: AppointmentsService) {}
 
   @Get()
   @ApiOperation({ summary: "Buscar agendamentos" })
@@ -22,12 +22,18 @@ export class AppointmentsController {
   }
 
   @Get("availability")
-  @ApiOperation({ summary: "Buscar disponibilidade de horários para um hospital e um dia específico" })
+  @ApiOperation({
+    summary:
+      "Buscar disponibilidade de horários para um hospital e um dia específico",
+  })
   async availability(
     @Query("hospitalId") hospitalId: number,
     @Query("scheduledDate") scheduledDate: string,
   ) {
-    return await this.appointmentsService.findAvailability(hospitalId, scheduledDate);
+    return await this.appointmentsService.findAvailability(
+      hospitalId,
+      scheduledDate,
+    );
   }
 
   @Post()

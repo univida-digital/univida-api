@@ -38,7 +38,9 @@ export class HospitalController {
   }
 
   @Get(":lat/:lng")
-  @ApiOperation({ summary: "Buscar Hospitais mais próximos por latitude e longitude" })
+  @ApiOperation({
+    summary: "Buscar Hospitais mais próximos por latitude e longitude",
+  })
   @ApiParam({ name: "lat", required: true, description: "Latitude" })
   @ApiParam({ name: "lng", required: true, description: "Longitude" })
   async showNearby(@Param("lat") lat: string, @Param("lng") lng: string) {

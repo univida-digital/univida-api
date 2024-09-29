@@ -1,4 +1,8 @@
-import { BadRequestException, ConflictException, Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { paginate, Pagination } from "nestjs-typeorm-paginate";
@@ -27,8 +31,10 @@ export class AppointmentsService {
 
   // Check if the time has already passed
   isPassedTime = (time: string, scheduledDate: string) => {
-    const formattedScheduledDate = new Date(scheduledDate).toISOString().split('T')[0];
-    const formattedCurrentDate = new Date().toISOString().split('T')[0];
+    const formattedScheduledDate = new Date(scheduledDate)
+      .toISOString()
+      .split("T")[0];
+    const formattedCurrentDate = new Date().toISOString().split("T")[0];
 
     // If the scheduled date is before the current date, return true
     if (formattedScheduledDate < formattedCurrentDate) return true;
@@ -36,13 +42,20 @@ export class AppointmentsService {
     // If the scheduled date is after the current date, return false
     if (formattedScheduledDate > formattedCurrentDate) return false;
 
-    const [hour, minutes] = time.split(':').map(Number);
-    const [currentHour, currentMinutes] = new Date().toLocaleTimeString().split(':').map(Number);
+    const [hour, minutes] = time.split(":").map(Number);
+    const [currentHour, currentMinutes] = new Date()
+      .toLocaleTimeString()
+      .split(":")
+      .map(Number);
 
-    return hour < currentHour || (hour === currentHour && minutes < currentMinutes);
-  }
+    return (
+      hour < currentHour || (hour === currentHour && minutes < currentMinutes)
+    );
+  };
 
-  async findAll(query: AppointmentsQueryDto): Promise<Pagination<AppointmentsEntity>> {
+  async findAll(
+    query: AppointmentsQueryDto,
+  ): Promise<Pagination<AppointmentsEntity>> {
     const page = query.page ?? 1;
     const limit = query.limit ?? 10;
 
@@ -61,19 +74,24 @@ export class AppointmentsService {
     const appointments = await this.AppoimentsRepository.find({
       where: {
         hospital: { id: hospitalId },
-        scheduledDate      
+        scheduledDate,
       },
     });
 
     const availableTimes = [];
-    const busyTimes = []
+    const busyTimes = [];
 
-    appointments.forEach((appointment) => busyTimes.push(appointment.scheduledTime));
+    appointments.forEach((appointment) =>
+      busyTimes.push(appointment.scheduledTime),
+    );
 
     for (let hour = 8; hour < 18; hour++) {
       for (let minutes = 0; minutes < 60; minutes += 30) {
-        const time = `${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-        if (!busyTimes.includes(time) && !this.isPassedTime(time, scheduledDate)) {
+        const time = `${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+        if (
+          !busyTimes.includes(time) &&
+          !this.isPassedTime(time, scheduledDate)
+        ) {
           availableTimes.push(time);
         }
       }
@@ -83,43 +101,46 @@ export class AppointmentsService {
   }
 
   async create(data: AppointmentsDto): Promise<AppointmentsEntity> {
-    const busyTimes: string[] = [];
-    
     const donatorAppointments = await this.AppoimentsRepository.find({
       where: {
         donator: { id: data.donatorId },
       },
     });
-  
+
     const sixtyDaysAgo = new Date();
     sixtyDaysAgo.setDate(sixtyDaysAgo.getDate() - 60);
-  
+
     const ninetyDaysAgo = new Date();
     ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
 
     donatorAppointments.forEach((appointment) => {
-      const isCompleted = appointment.status.id === AppointmentsStatus.COMPLETED;
+      const isCompleted =
+        appointment.status.id === AppointmentsStatus.COMPLETED;
       const scheduledDate = new Date(appointment.scheduledDate);
       const isMale = appointment.donator.donatorDetails.gender === "Masculino";
 
-      console.log(isMale, scheduledDate, isCompleted, sixtyDaysAgo, ninetyDaysAgo);
-
       if (appointment.scheduledDate === data.scheduledDate) {
-        throw new ConflictException('Você já possui um agendamento para esta data.');
+        throw new ConflictException(
+          "Você já possui um agendamento para esta data.",
+        );
       }
-  
+
       if (appointment.status.id === AppointmentsStatus.CONFIRMED) {
         throw new ConflictException(
-          `Você já possui um agendamento ativo para o dia ${appointment.scheduledDate}.`
+          `Você já possui um agendamento ativo para o dia ${appointment.scheduledDate}.`,
         );
       }
 
       if (isMale && scheduledDate > sixtyDaysAgo && isCompleted) {
-        throw new ConflictException('Você já realizou uma doação nos últimos 60 dias. Tente novamente depois.');
+        throw new ConflictException(
+          "Você já realizou uma doação nos últimos 60 dias. Tente novamente depois.",
+        );
       }
-  
+
       if (!isMale && scheduledDate > ninetyDaysAgo && isCompleted) {
-        throw new ConflictException('Você já realizou uma doação nos últimos 90 dias. Tente novamente depois.');
+        throw new ConflictException(
+          "Você já realizou uma doação nos últimos 90 dias. Tente novamente depois.",
+        );
       }
     });
 
@@ -129,17 +150,25 @@ export class AppointmentsService {
         scheduledDate: data.scheduledDate,
       },
     });
-  
-    hospitalAppointments.forEach((appointment) => busyTimes.push(appointment.scheduledTime));
-  
+
+    const busyTimes: string[] = [];
+
+    hospitalAppointments.forEach((appointment) =>
+      busyTimes.push(appointment.scheduledTime),
+    );
+
     if (busyTimes.includes(data.scheduledTime)) {
-      throw new ConflictException('O horário selecionado não está mais vago. Por favor, selecione outro.');
+      throw new ConflictException(
+        "O horário selecionado não está mais vago. Por favor, selecione outro.",
+      );
     }
-  
+
     if (this.isPassedTime(data.scheduledTime, data.scheduledDate)) {
-      throw new BadRequestException('O horário selecionado já passou. Por favor, selecione outro.');
+      throw new BadRequestException(
+        "O horário selecionado já passou. Por favor, selecione outro.",
+      );
     }
-  
+
     const appointment = this.AppoimentsRepository.create({
       donator: { id: data.donatorId },
       hospital: { id: data.hospitalId },
@@ -147,8 +176,7 @@ export class AppointmentsService {
       scheduledDate: data.scheduledDate,
       scheduledTime: data.scheduledTime,
     });
-  
+
     return await this.AppoimentsRepository.save(appointment);
   }
-  
 }
