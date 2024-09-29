@@ -83,8 +83,6 @@ export class AppointmentsService {
   }
 
   async create(data: AppointmentsDto): Promise<AppointmentsEntity> {
-    const busyTimes: string[] = [];
-    
     const donatorAppointments = await this.AppoimentsRepository.find({
       where: {
         donator: { id: data.donatorId },
@@ -101,8 +99,6 @@ export class AppointmentsService {
       const isCompleted = appointment.status.id === AppointmentsStatus.COMPLETED;
       const scheduledDate = new Date(appointment.scheduledDate);
       const isMale = appointment.donator.donatorDetails.gender === "Masculino";
-
-      console.log(isMale, scheduledDate, isCompleted, sixtyDaysAgo, ninetyDaysAgo);
 
       if (appointment.scheduledDate === data.scheduledDate) {
         throw new ConflictException('Você já possui um agendamento para esta data.');
@@ -129,7 +125,9 @@ export class AppointmentsService {
         scheduledDate: data.scheduledDate,
       },
     });
-  
+    
+    const busyTimes: string[] = [];
+
     hospitalAppointments.forEach((appointment) => busyTimes.push(appointment.scheduledTime));
   
     if (busyTimes.includes(data.scheduledTime)) {
