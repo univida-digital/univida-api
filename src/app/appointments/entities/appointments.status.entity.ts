@@ -7,6 +7,14 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 
+export enum AppointmentsStatus {
+  CONFIRMED = 1,
+  CANCELLED = 2,
+  EXPIRED = 3,
+  REJECTED = 4,
+  COMPLETED = 5,
+}
+
 @Entity({ schema: "appointments", name: "appointments_status" })
 export class AppointmentsStatusEntity {
   @PrimaryGeneratedColumn()

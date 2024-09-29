@@ -17,16 +17,16 @@ export class DonatorDetailsEntity {
   @OneToOne(() => DonatorEntity)
   donator: DonatorEntity;
 
-  @Column({ name: "orientation" })
+  @Column({ name: "orientation", nullable: true })
   orientation: string;
 
-  @Column({ name: "gender" })
+  @Column({ name: "gender", nullable: true })
   gender: string;
 
-  @Column({ name: "weight_kilo" })
+  @Column({ name: "weight_kilo", nullable: true })
   weightKilo: number;
 
-  @Column({ name: "has_allergy" })
+  @Column({ name: "has_allergy", nullable: true })
   hasAllergy: boolean;
 
   @Column({ name: "allergy_description", nullable: true })

@@ -3,12 +3,11 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { DonatorDetailsEntity } from "../../donator/entities/donator.details.entity";
 import { DonatorEntity } from "../../donator/entities/donator.entity";
 import { HospitalEntity } from "src/app/hospital/hospital.entity";
 import { AppointmentsStatusEntity } from "./appointments.status.entity";
@@ -19,15 +18,15 @@ export class AppointmentsEntity {
   @ApiProperty()
   id: number;
 
-  @OneToOne(() => DonatorEntity, { eager: true })
+  @ManyToOne(() => DonatorEntity, { eager: true, cascade: true })
   @JoinColumn({ name: "donator_id" })
   donator: DonatorEntity;
 
-  @OneToOne(() => HospitalEntity, { eager: true, cascade: true })
+  @ManyToOne(() => HospitalEntity, { eager: true, cascade: true })
   @JoinColumn({ name: "hospital_id" })
   hospital: HospitalEntity;
 
-  @OneToOne(() => DonatorDetailsEntity, { eager: true, cascade: true })
+  @ManyToOne(() => AppointmentsStatusEntity, { eager: true, cascade: true })
   @JoinColumn({ name: "status_id" })
   status: AppointmentsStatusEntity;
 
