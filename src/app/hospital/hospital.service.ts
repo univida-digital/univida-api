@@ -65,7 +65,7 @@ export class HospitalService {
           distance,
         };
       })
-      .filter((hospital) => hospital.distance)
+      .filter((hospital) => hospital.distance <= 100)
       .sort((a, b) => a.distance - b.distance);
   
     return nearbyHospitals;

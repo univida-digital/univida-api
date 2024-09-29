@@ -5,8 +5,8 @@ import { UserModule } from "./app/user/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { DonatorModule } from "./app/donator/donator.module";
 import { HospitalModule } from "./app/hospital/hospital.module";
-import { dataSourceOptions } from "db/data-source";
 import { NotificationModule } from "./app/notification/notification.module";
+import { AppointmentsModule } from './app/appointments/appointments.module';
 
 @Module({
   imports: [
@@ -27,6 +27,7 @@ import { NotificationModule } from "./app/notification/notification.module";
     DonatorModule,
     HospitalModule,
     NotificationModule,
+    AppointmentsModule,
   ],
   controllers: [],
   providers: [],
