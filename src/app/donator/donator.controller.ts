@@ -17,7 +17,7 @@ import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { IndexDonatorSwagger } from "./swagger/index-donator.swagger";
 
 @Controller("api/v1/donator")
-@ApiTags(`Donator`)
+@ApiTags("Donator")
 export class DonatorController {
   constructor(private readonly donatorService: DonatorService) {}
 
